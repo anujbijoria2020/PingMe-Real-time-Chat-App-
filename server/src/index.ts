@@ -7,7 +7,6 @@ import mongoose from "mongoose";
 import userRouter from './routes/userRoutes.js';
 import messageRouter from './routes/messageRoutes.js';
 
-const PORT  = process.env.PORT || 3000;
 const app = express();
 const server = createServer(app);
 
@@ -29,8 +28,8 @@ mongoose.connect(`${process.env.MONGO_URL}/PingMe`).then(()=>{
 export const UserSocketMap:any = {}; 
 
 io.on("connection",(socket)=>{
-let  userId = socket.handshake.query.userId;
-userId = Array.isArray(userId)?userId[0]:userId;
+    let  userId = socket.handshake.query.userId;
+    userId = Array.isArray(userId)?userId[0]:userId;
 console.log("user connected",userId);
 
 if(userId) UserSocketMap[userId] = socket.id;
@@ -39,8 +38,8 @@ io.emit("getOnlineUsers",Object.keys(UserSocketMap));
 
 socket.on("disconnect",()=>{
     console.log("User disconnected",userId);
-     delete UserSocketMap[userId!];
-     io.emit("getOnlineUsers",Object.keys(UserSocketMap));
+    delete UserSocketMap[userId!];
+    io.emit("getOnlineUsers",Object.keys(UserSocketMap));
 })
 })
 
@@ -57,6 +56,9 @@ app.use("/api.status",(req,res)=>{
 app.use("/api/v1/auth",userRouter);
 app.use("/api/v1/message",messageRouter);
 
+if(process.env.NODE_ENV!=='production'){const PORT  = process.env.PORT || 3000;
 server.listen(PORT,()=>{
-    console.log(`server is running on port ${PORT}`);
+console.log(`server is running on port ${PORT}`);
 });
+}
+export default server;
