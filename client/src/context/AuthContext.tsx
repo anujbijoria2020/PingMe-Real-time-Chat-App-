@@ -3,7 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { io, Socket } from "socket.io-client";
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL as string;
+const backendUrl = import.meta.env.VITE_BACKEND_URL as string  || "http://localhost:8000";
 console.log(backendUrl);
 axios.defaults.baseURL = backendUrl;
 
