@@ -75,6 +75,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const connectSocket = (userData: any) => {
     if (!userData || socket?.connected) return;
     const newSocket = io(backendUrl, {
+      transports:["websockets"],
       query: { userId: userData._id },
     });
 
