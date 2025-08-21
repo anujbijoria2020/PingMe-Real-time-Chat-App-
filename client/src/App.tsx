@@ -10,7 +10,7 @@ export default function App(){
   const {authUser}= useContext(AuthContext);
 
 return(
-<div  className="bg-[url('/backgroundImage.jpeg')] bg-cover ">
+<div  className="bg-[url('/backgroundImage.jpg')] bg-cover ">
 <Toaster/>
     <Routes>
     <Route path="/" element={authUser?<HomePage/>:<Navigate to="/login"/>}/>
