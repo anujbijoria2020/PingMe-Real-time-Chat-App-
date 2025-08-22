@@ -25,10 +25,10 @@ mongoose.connect(`${process.env.MONGO_URL}/PingMe`).then(()=>{
 })
 
 //storing online users {userId:socketId}
-export const UserSocketMap:any = {}; 
+export const UserSocketMap:Record<string,string> = {}; 
 
 io.on("connection",(socket)=>{
-    let  userId = socket.handshake.query.userId;
+    let  userId = socket.handshake.query.userId as string;
     userId = Array.isArray(userId)?userId[0]:userId;
 console.log("user connected",userId);
 
