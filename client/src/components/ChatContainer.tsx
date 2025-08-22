@@ -52,7 +52,7 @@ useEffect(() => {
 return SelectedUser ? (
     <div className="h-full overflow-scroll relative backdrop-blur-lg">
       {/* header */}
-      <div className="flex items-center gap-3 py-3 mx-4 border border-stone-500">
+      <div className=" flex items-center gap-3 py-3 mx-4 border border-stone-500">
         <img
           src={SelectedUser?.profilePic || assets.avatar_icon}
           alt=""
