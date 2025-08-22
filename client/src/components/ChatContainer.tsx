@@ -50,7 +50,7 @@ useEffect(() => {
 
 
 return SelectedUser ? (
-  <div className="h-full flex flex-col relative backdrop-blur-lg">
+<div className="h-full flex flex-col relative backdrop-blur-lg">
   {/* header */}
   <div className="flex items-center gap-3 py-3 mx-4 border-b border-stone-500">
     <img
@@ -60,7 +60,9 @@ return SelectedUser ? (
     />
     <p
       className="flex-1 text-lg cursor-pointer text-white flex items-center gap-2"
-      onClick={() => setShowSideBar(true)}
+      onClick={() => {
+        setShowSideBar(true);
+      }}
     >
       {SelectedUser?.fullName}
       {onlineUsers.includes(SelectedUser._id) && (
@@ -71,7 +73,9 @@ return SelectedUser ? (
     <img
       src={assets.arrow_icon}
       alt=""
-      onClick={() => setSelectedUser(null)}
+      onClick={() => {
+        setSelectedUser(null);
+      }}
       className="md:hidden max-w-7 cursor-pointer"
     />
     <img src={assets.help_icon} alt="" className="w-7 mr-3" />
@@ -79,47 +83,51 @@ return SelectedUser ? (
 
   {/* messages (scrollable middle) */}
   <div className="flex-1 overflow-y-auto p-3 pb-20">
-    {messages.map((message: any, index: number) => (
-      <div
-        key={index}
-        className={`flex items-end gap-2 justify-end ${
-          message.senderId !== authUser._id && "flex-row-reverse"
-        }`}
-      >
-        {message.image ? (
-          <img
-            src={message.image}
-            alt=""
-            className="w-80 rounded-2xl p-2 border-lg cursor-pointer"
-            onClick={() => window.open(message.image)}
-          />
-        ) : (
-          <p
-            className={`p-2 max-w-[200px] md:text-sm font-light rounded-lg mb-8 break-all bg-violet-500/30 text-white ${
-              message.senderId === authUser._id
-                ? "rounded-br-none rounded-tl-none"
-                : "rounded-bl-none rounded-tr-none"
-            }`}
-          >
-            {message.text}
-          </p>
-        )}
-        <div className="text-center text-xs">
-          <img
-            src={
-              message.senderId === authUser._id
-                ? authUser?.profilePic || assets.avatar_icon
-                : SelectedUser?.profilePic || assets.avatar_icon
-            }
-            alt=""
-            className="w-7 rounded-full aspect-[1/1] object-cover"
-          />
-          <p className="text-gray-500">
-            {formatMessageTime(message.createdAt)}
-          </p>
+    {messages.map((message: any, index: number) => {
+      return (
+        <div
+          key={index}
+          className={`flex items-end gap-2 justify-end ${
+            message.senderId !== authUser._id && "flex-row-reverse"
+          }`}
+        >
+          {message.image ? (
+            <img
+              src={message.image}
+              alt=""
+              className="w-80 rounded-2xl p-2 border-lg cursor-pointer"
+              onClick={() => {
+                window.open(message.image);
+              }}
+            />
+          ) : (
+            <p
+              className={`p-2 max-w-[200px] md:text-sm font-light rounded-lg mb-8 break-all bg-violet-500/30 text-white ${
+                message.senderId === authUser._id
+                  ? "rounded-br-none rounded-tl-none"
+                  : "rounded-bl-none rounded-tr-none"
+              }`}
+            >
+              {message.text}
+            </p>
+          )}
+          <div className="text-center text-xs">
+            <img
+              src={
+                message.senderId === authUser._id
+                  ? authUser?.profilePic || assets.avatar_icon
+                  : SelectedUser?.profilePic || assets.avatar_icon
+              }
+              alt=""
+              className="w-7 rounded-full aspect-[1/1] object-cover"
+            />
+            <p className="text-gray-500">
+              {formatMessageTime(message.createdAt)}
+            </p>
+          </div>
         </div>
-      </div>
-    ))}
+      );
+    })}
     <div ref={scrollEnd}></div>
   </div>
 
@@ -128,7 +136,9 @@ return SelectedUser ? (
     <div className="flex-1 flex items-center bg-slate-800 px-3 rounded-full">
       <input
         value={Input}
-        onChange={(e) => setInput(e.target.value)}
+        onChange={(e) => {
+          setInput(e.target.value);
+        }}
         onKeyDown={(e) => {
           if (e.key === "Enter") handleSendMessage(e);
         }}
@@ -144,7 +154,11 @@ return SelectedUser ? (
         hidden
       />
       <label htmlFor="image">
-        <img src={assets.gallery_icon} alt="" className="w-5 mr-2 cursor-pointer" />
+        <img
+          src={assets.gallery_icon}
+          alt=""
+          className="w-5 mr-2 cursor-pointer"
+        />
       </label>
     </div>
     <img
