@@ -91,7 +91,7 @@ if(!isPasswordCorrect){
 const token = GenerateToken(UserExists._id.toString());
 
 return res.status(200).json({
-    message:"Login Successgull",
+    message:"Login Successfull",
     token:token,
     success:true
 })

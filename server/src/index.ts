@@ -13,7 +13,8 @@ const server = createServer(app);
 //intialising socket.io server
 export const io =new Server(server,{
     cors:{
-        origin:"*"
+        origin:"*",
+        credentials:true
     }
 });
 
@@ -26,6 +27,7 @@ mongoose.connect(`${process.env.MONGO_URL}/PingMe`).then(()=>{
 
 //storing online users {userId:socketId}
 export const UserSocketMap:Record<string,string> = {}; 
+
 
 io.on("connection",(socket)=>{
     let  userId = socket.handshake.query.userId as string;
@@ -45,7 +47,10 @@ socket.on("disconnect",()=>{
 
 
 app.use(express.json({limit:"4mb"}));
-app.use(cors());
+app.use(cors({
+    origin:"*",
+    credentials:true
+}));
 
 app.use("/api.status",(req,res)=>{
     res.send({

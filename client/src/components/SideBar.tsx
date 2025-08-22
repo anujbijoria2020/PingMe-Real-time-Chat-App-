@@ -8,7 +8,7 @@ export function SideBar() {
   const navigate = useNavigate();
   const {logout,onlineUsers}= useContext(AuthContext);
 
-  const {SelectedUser,setSelectedUser,getUsers,users,unseenMessages} = useContext(ChatContext);
+  const {SelectedUser,setSelectedUser,getUsers,users,unseenMessages,setUnseenMessages} = useContext(ChatContext);
   const [input,setInput]= useState<any>();
 
   const filteredUsers = input? users.filter((user:any)=>user.fullName.toLowerCase().includes(input.toLowerCase()
@@ -73,6 +73,11 @@ getUsers();
               <div
                 onClick={() => {
                   setSelectedUser(user);
+                  setUnseenMessages((prev:any) => {
+                    const copy = { ...prev };
+                    delete copy[SelectedUser?._id];
+                    return copy;
+                  });
                 }}
                 key={index}
                 className={`relative flex items-center gap-2 p-2 pl-4 rounded cursor-pointer max-sm:text-sm my-1 ${

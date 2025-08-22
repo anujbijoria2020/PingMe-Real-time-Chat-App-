@@ -35,7 +35,12 @@ const getMessages = async (userId:any)=>{
 try{
 const {data}=await axios.get(`/api/v1/message/${userId}`);
 if(data.success){
-setMessages(data.messages)
+setMessages(data.messages);
+setUnseenMessages((prev:any) => {
+    const copy = { ...prev };
+    delete copy[SelectedUser?._id];
+    return copy;
+  });
 }
 }
 catch(error:any){
@@ -49,6 +54,7 @@ try{
 
     if(data.success){
     setMessages((prev:any)=>[...prev,data.newMessage]);
+    
     }else{
         toast.error(data.message);
     }

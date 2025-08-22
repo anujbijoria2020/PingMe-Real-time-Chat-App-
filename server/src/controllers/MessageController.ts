@@ -13,7 +13,7 @@ const  filteredUsers = await User.find({_id:{$ne:userId}}).select("-password");
 //counting not seen msgs
 const unseenMessages:Record<string,number>  = {};
 
-    const promises = filteredUsers.map(async(user)=>{
+    const promises = filteredUsers.map(async(user:any)=>{
 const  messages = await Message.find({senderId:user._id ,recieverId:userId,seen:false});
 if(messages.length>0){
     unseenMessages[user._id.toString()] = messages.length;
@@ -104,6 +104,10 @@ try{
     if(recieverSocketId){
         io.to(recieverSocketId).emit("newMessage",newMessage);
     }
+    const senderSocketId = UserSocketMap[senderId];
+if (senderSocketId) {
+  io.to(senderSocketId).emit("newMessage", newMessage);
+}
 
     res.status(200).json({
         message:"message send successFully",

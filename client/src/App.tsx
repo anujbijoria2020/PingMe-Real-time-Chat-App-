@@ -5,10 +5,11 @@ import { ProfilePage } from "./pages/ProfilePage"
 import {Toaster} from 'react-hot-toast';
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import LoadingScreen from "./components/LoadingComponent";
 
 export default function App(){
-  const {authUser}= useContext(AuthContext);
-
+  const {authUser,initializing}= useContext(AuthContext);
+if(initializing)return <LoadingScreen/>;
 return(
 <div  className="bg-[url('/backgroundImage.jpg')] bg-cover ">
 <Toaster/>
